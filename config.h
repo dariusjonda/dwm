@@ -26,7 +26,7 @@ static const Rule rules[] = {
 	/* class     instance  title           tags mask  iscentered  isfloating  isterminal  noswallow  monitor */
 	{ "Gimp",    NULL,     NULL,           0,         0,          1,          0,           0,        -1 },
 	{ "Firefox", NULL,     NULL,           1 << 8,    0,          0,          0,          -1,        -1 },
-	{ "St",      NULL,     NULL,           0,         0,          0,          1,           0,        -1 },
+	{ "st",      NULL,     NULL,           0,         0,          0,          1,           0,        -1 },
 	{ NULL,      NULL,     "Event Tester", 0,         0,          0,          0,           1,        -1 }, /* xev */
 };
 
@@ -74,7 +74,7 @@ static Key keys[] = {
 	{ MODKEY|ControlMask,           XK_Return,                  spawn,          {.v = poptermcmd } },
 	{ MODKEY,                       XK_BackSpace,               spawn,          {.v = suspendcmd } },
 	{ MODKEY|ShiftMask,             XK_i,                       spawn,          {.v = pavucontrolcmd } },
-	{ MODKEY,                       XK_u,                       spawn,          {.v = browsercmd } },
+	{ MODKEY,                       XK_f,                       spawn,          {.v = browsercmd } },
 	{ MODKEY,                       XK_r,                       spawn,          {.v = filemanagercmd } },
 	{ MODKEY,                       XK_v,                       spawn,          {.v = clipboardcmd } },
 	{ MODKEY,                       XK_z,                       spawn,          {.v = colourpickercmd } },
@@ -91,7 +91,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Escape,                  view,           {0} },
 	{ MODKEY|ShiftMask,             XK_c,                       killclient,     {0} },
 	{ MODKEY,                       XK_t,                       setlayout,      {.v = &layouts[0]} },
-	{ MODKEY,                       XK_f,                       setlayout,      {.v = &layouts[1]} },
+	// { MODKEY,                       XK_f,                       setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,                       setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_0,                       view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,                       tag,            {.ui = ~0 } },
