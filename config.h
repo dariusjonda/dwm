@@ -23,13 +23,13 @@ static const char *colors[][3]      = {
 static const char *tags[] = { "main", "code", "book", "misc" };
 
 static const Rule rules[] = {
-	/* class     instance  title           tags mask  iscentered  isfloating  isterminal  noswallow  monitor */
-	{ "Gimp",    NULL,     NULL,           0,         0,          1,          0,           0,        -1 },
-	{ "st-256color","popterm",NULL,        0,         1,          1,          1,           0,        -1 },
-	{ "st",      "ebook",  NULL,           1 << 2,    0,          0,          1,           0,        -1 },
-	{ "st",      "media",  NULL,           1 << 3,    0,          0,          1,           0,        -1 },
-	{ "st",      NULL,     NULL,           0,         0,          0,          1,           0,        -1 },
-	{ "Gcolor2", NULL,     NULL,           0,         1,          1,          0,           0,        -1 },
+	/* class     instance  title           tags mask  isfloating  iscentered  isterminal  noswallow  monitor */
+	{ "Gimp",    NULL,     NULL,           0,         1,          1,          1,           0,        -1 },
+	{ "st",      NULL,     NULL,           0,         0,          1,          1,           0,        -1 },
+	{ "st",      "pop",    NULL,           0,         1,          1,          1,           0,        -1 },
+	{ "st",      "popmaster", NULL,       -1,         1,          1,          1,           0,        -1 },
+	{ "st",      "ebook",  NULL,           1 << 2,    0,          1,          1,           0,        -1 },
+	{ "st",      "media",  NULL,           1 << 3,    0,          1,          1,           0,        -1 },
 	{ NULL,      NULL,     "Event Tester", 0,         0,          0,          0,           1,        -1 }, /* xev */
 };
 
@@ -60,51 +60,56 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, NULL };
 static const char *termcmd[]               = { "st", NULL };
-static const char *poptermcmd[]            = { "st", "-n", "popterm", "-g", "90x30", NULL };
+static const char *popmastercmd[]            = { "st", "-n", "popmaster", "-g", "90x30", NULL };
 static const char *ytaudio[]               = { "st", "-n", "media", "-e", "ytfzf", "-tml", NULL };
-static const char *ytvideo[]               = { "st", "-n", "media", "-e", "ytfzf", "-tl", NULL };
+static const char *ytvideo[]               = { "st", "-n", "popmaster", "-e", "ytfzf", "-tl", NULL };
 static const char *ebook[]                 = { "st", "-n", "ebook", "-e", "zathura_ebook", NULL };
+static const char *ebookpop[]              = { "st", "-n", "popmaster", "-e", "zathura_ebook", NULL };
 static const char *suspendcmd[]            = { "sudo", "systemctl", "suspend", NULL };
 static const char *browsercmd[]            = { "firefox", NULL };
 static const char *filemanagercmd[]        = { "st", "-e", "ranger", NULL };
-static const char *colourpickercmd[]       = { "gcolor2", NULL };
 
 #include "movestack.c"
 #include <X11/XF86keysym.h>
 static Key keys[] = {
 	/* modifier                     key                         function        argument */
-	{ MODKEY,                       XK_space,                   spawn,          {.v = dmenucmd } },
-	{ MODKEY|ShiftMask,             XK_Return,                  spawn,          {.v = termcmd } },
-	{ MODKEY|ControlMask,           XK_Return,                  spawn,          {.v = poptermcmd } },
+	{ MODKEY,                       XK_Tab,                     view,           {0} },
 	{ MODKEY,                       XK_BackSpace,               spawn,          {.v = suspendcmd } },
-	{ MODKEY,                       XK_f,                       spawn,          {.v = browsercmd } },
-	{ MODKEY,                       XK_r,                       spawn,          {.v = filemanagercmd } },
-	{ MODKEY|ShiftMask,             XK_y,                       spawn,          {.v = ytaudio } },
-	{ MODKEY,                       XK_y,                       spawn,          {.v = ytvideo } },
-	{ MODKEY,                       XK_z,                       spawn,          {.v = ebook } },
-	{ MODKEY|ShiftMask,             XK_z,                       spawn,          {.v = colourpickercmd } },
-	{ MODKEY,                       XK_b,                       togglebar,      {0} },
-	{ MODKEY,                       XK_j,                       focusstack,     {.i = +1 } },
-	{ MODKEY,                       XK_k,                       focusstack,     {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_j,                       movestack,      {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_k,                       movestack,      {.i = -1 } },
-	{ MODKEY,                       XK_i,                       incnmaster,     {.i = +1 } },
-	{ MODKEY,                       XK_d,                       incnmaster,     {.i = -1 } },
-	{ MODKEY,                       XK_h,                       setmfact,       {.f = -0.05} },
-	{ MODKEY,                       XK_l,                       setmfact,       {.f = +0.05} },
 	{ MODKEY,                       XK_Return,                  zoom,           {0} },
-	{ MODKEY,                       XK_Escape,                  view,           {0} },
+	{ MODKEY|ShiftMask,             XK_Return,                  spawn,          {.v = termcmd } },
+	{ MODKEY|ControlMask,           XK_Return,                  spawn,          {.v = popmastercmd } },
+	{ MODKEY,                       XK_space,                   spawn,          {.v = dmenucmd } },
+ 	{ MODKEY|ShiftMask,             XK_space,                   togglefloating, {0} },
+	{ MODKEY,                       XK_comma,                   focusmon,       {.i = -1 } },
+ 	{ MODKEY|ShiftMask,             XK_comma,                   tagmon,         {.i = -1 } },
+	{ MODKEY,                       XK_period,                  focusmon,       {.i = +1 } },
+ 	{ MODKEY|ShiftMask,             XK_period,                  tagmon,         {.i = +1 } },
+ 	{ MODKEY|ControlMask,           XK_period,                  setcentered,    {0} },
+	{ MODKEY,                       XK_b,                       togglebar,      {0} },
 	{ MODKEY|ShiftMask,             XK_c,                       killclient,     {0} },
-	{ MODKEY,                       XK_t,                       setlayout,      {.v = &layouts[0]} },
+	{ MODKEY,                       XK_d,                       incnmaster,     {.i = -1 } },
+	{ MODKEY,                       XK_f,                       spawn,          {.v = browsercmd } },
 	// { MODKEY,                       XK_f,                       setlayout,      {.v = &layouts[1]} },
+	{ MODKEY,                       XK_h,                       setmfact,       {.f = -0.05} },
+	// { MODKEY|ShiftMask,             XK_h,                       tagmon,         {.i = -1 } },
+	{ MODKEY,                       XK_i,                       incnmaster,     {.i = +1 } },
+	{ MODKEY,                       XK_j,                       focusstack,     {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_j,                       movestack,      {.i = +1 } },
+	{ MODKEY,                       XK_k,                       focusstack,     {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_k,                       movestack,      {.i = -1 } },
+	{ MODKEY,                       XK_l,                       setmfact,       {.f = +0.05} },
+	// { MODKEY|ShiftMask,             XK_l,                       tagmon,         {.i = +1 } },
 	{ MODKEY,                       XK_m,                       setlayout,      {.v = &layouts[2]} },
+	{ MODKEY,                       XK_p,                       spawn,          {.v = dmenucmd } },
+	{ MODKEY|ShiftMask,             XK_q,                       quit,           {0} },
+	{ MODKEY,                       XK_r,                       spawn,          {.v = filemanagercmd } },
+	{ MODKEY,                       XK_t,                       setlayout,      {.v = &layouts[0]} },
+	{ MODKEY,                       XK_y,                       spawn,          {.v = ytvideo } },
+	{ MODKEY|ShiftMask,             XK_y,                       spawn,          {.v = ytaudio } },
+	{ MODKEY,                       XK_z,                       spawn,          {.v = ebook } },
+	{ MODKEY|ShiftMask,             XK_z,                       spawn,          {.v = ebookpop } },
 	{ MODKEY,                       XK_0,                       view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,                       tag,            {.ui = ~0 } },
-	{ MODKEY,                       XK_comma,                   focusmon,       {.i = -1 } },
-	{ MODKEY,                       XK_period,                  focusmon,       {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_h,                       tagmon,         {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_l,                       tagmon,         {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_period,                  setcentered,    {0} },
 	TAGKEYS(                        XK_1,                                       0)
 	TAGKEYS(                        XK_2,                                       1)
 	TAGKEYS(                        XK_3,                                       2)
@@ -114,7 +119,6 @@ static Key keys[] = {
 	TAGKEYS(                        XK_7,                                       6)
 	TAGKEYS(                        XK_8,                                       7)
 	TAGKEYS(                        XK_9,                                       8)
-	{ MODKEY|ShiftMask,             XK_q,                       quit,           {0} },
 };
 
 /* button definitions */
