@@ -26,7 +26,10 @@ static const Rule rules[] = {
 	/* class     instance  title           tags mask  iscentered  isfloating  isterminal  noswallow  monitor */
 	{ "Gimp",    NULL,     NULL,           0,         0,          1,          0,           0,        -1 },
 	{ "Firefox", NULL,     NULL,           1 << 8,    0,          0,          0,          -1,        -1 },
+	{ "st-256color","popterm",NULL,        0,         1,          1,          1,           0,        -1 },
+	{ "st",      "media",  NULL,           3 << 3,         0,          0,          1,           0,        -1 },
 	{ "st",      NULL,     NULL,           0,         0,          0,          1,           0,        -1 },
+	{ "Gcolor2", NULL,     NULL,           0,         1,          1,          0,           0,        -1 },
 	{ NULL,      NULL,     "Event Tester", 0,         0,          0,          0,           1,        -1 }, /* xev */
 };
 
@@ -58,11 +61,11 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, NULL };
 static const char *termcmd[]               = { "st", NULL };
 static const char *poptermcmd[]            = { "st", "-n", "popterm", "-g", "90x30", NULL };
+static const char *ytaudio[]               = { "st", "-n", "media", "-e", "ytfzf", "-tml", NULL };
+static const char *ytvideo[]               = { "st", "-n", "media", "-e", "ytfzf", "-tl", NULL };
 static const char *suspendcmd[]            = { "sudo", "systemctl", "suspend", NULL };
-static const char *pavucontrolcmd[]        = { "pavucontrol", NULL };
 static const char *browsercmd[]            = { "firefox", NULL };
 static const char *filemanagercmd[]        = { "st", "-e", "ranger", NULL };
-static const char *clipboardcmd[]          = { "clipmenu", NULL };
 static const char *colourpickercmd[]       = { "gcolor2", NULL };
 
 #include "movestack.c"
@@ -73,11 +76,11 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_Return,                  spawn,          {.v = termcmd } },
 	{ MODKEY|ControlMask,           XK_Return,                  spawn,          {.v = poptermcmd } },
 	{ MODKEY,                       XK_BackSpace,               spawn,          {.v = suspendcmd } },
-	{ MODKEY|ShiftMask,             XK_i,                       spawn,          {.v = pavucontrolcmd } },
 	{ MODKEY,                       XK_f,                       spawn,          {.v = browsercmd } },
 	{ MODKEY,                       XK_r,                       spawn,          {.v = filemanagercmd } },
-	{ MODKEY,                       XK_v,                       spawn,          {.v = clipboardcmd } },
-	{ MODKEY,                       XK_z,                       spawn,          {.v = colourpickercmd } },
+	{ MODKEY|ShiftMask,             XK_y,                       spawn,          {.v = ytaudio } },
+	{ MODKEY,                       XK_y,                       spawn,          {.v = ytvideo } },
+	{ MODKEY|ShiftMask,             XK_z,                       spawn,          {.v = colourpickercmd } },
 	{ MODKEY,                       XK_b,                       togglebar,      {0} },
 	{ MODKEY,                       XK_j,                       focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,                       focusstack,     {.i = -1 } },
