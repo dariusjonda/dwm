@@ -25,9 +25,9 @@ static const char *tags[] = { "main", "code", "book", "misc" };
 static const Rule rules[] = {
 	/* class     instance  title           tags mask  iscentered  isfloating  isterminal  noswallow  monitor */
 	{ "Gimp",    NULL,     NULL,           0,         0,          1,          0,           0,        -1 },
-	{ "Firefox", NULL,     NULL,           1 << 8,    0,          0,          0,          -1,        -1 },
 	{ "st-256color","popterm",NULL,        0,         1,          1,          1,           0,        -1 },
-	{ "st",      "media",  NULL,           3 << 3,         0,          0,          1,           0,        -1 },
+	{ "st",      "ebook",  NULL,           1 << 2,    0,          0,          1,           0,        -1 },
+	{ "st",      "media",  NULL,           1 << 3,    0,          0,          1,           0,        -1 },
 	{ "st",      NULL,     NULL,           0,         0,          0,          1,           0,        -1 },
 	{ "Gcolor2", NULL,     NULL,           0,         1,          1,          0,           0,        -1 },
 	{ NULL,      NULL,     "Event Tester", 0,         0,          0,          0,           1,        -1 }, /* xev */
@@ -63,6 +63,7 @@ static const char *termcmd[]               = { "st", NULL };
 static const char *poptermcmd[]            = { "st", "-n", "popterm", "-g", "90x30", NULL };
 static const char *ytaudio[]               = { "st", "-n", "media", "-e", "ytfzf", "-tml", NULL };
 static const char *ytvideo[]               = { "st", "-n", "media", "-e", "ytfzf", "-tl", NULL };
+static const char *ebook[]                 = { "st", "-n", "ebook", "-e", "zathura_ebook", NULL };
 static const char *suspendcmd[]            = { "sudo", "systemctl", "suspend", NULL };
 static const char *browsercmd[]            = { "firefox", NULL };
 static const char *filemanagercmd[]        = { "st", "-e", "ranger", NULL };
@@ -80,6 +81,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_r,                       spawn,          {.v = filemanagercmd } },
 	{ MODKEY|ShiftMask,             XK_y,                       spawn,          {.v = ytaudio } },
 	{ MODKEY,                       XK_y,                       spawn,          {.v = ytvideo } },
+	{ MODKEY,                       XK_z,                       spawn,          {.v = ebook } },
 	{ MODKEY|ShiftMask,             XK_z,                       spawn,          {.v = colourpickercmd } },
 	{ MODKEY,                       XK_b,                       togglebar,      {0} },
 	{ MODKEY,                       XK_j,                       focusstack,     {.i = +1 } },
