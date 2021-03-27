@@ -4,6 +4,7 @@
 static const unsigned int borderpx    = 2;        /* border pixel of windows */
 static const int gappx                = 3;        /* gaps between windows */
 static const unsigned int snap        = 0;        /* snap pixel */
+static const int swallowfloating      = 0;        /* 1 means swallow floating windows by default */
 static const int showbar              = 0;        /* 0 means no bar */
 static const int topbar               = 1;        /* 0 means bottom bar */
 static const char *fonts[]            = { "FiraCode-Regular:size=15" };
@@ -22,16 +23,11 @@ static const char *colors[][3]      = {
 static const char *tags[] = { "main", "code", "book", "misc" };
 
 static const Rule rules[] = {
-	/* xprop(1):
-	 *	WM_CLASS(STRING) = instance, class
-	 *	WM_NAME(STRING) = title
-	 */
-	/* class            instance         title      tags mask     iscentered   isfloating   monitor */
-	{ "st-256color",    "start",         NULL,      1,            0,           0,            0 },
-	{ "st-256color",    "files",         NULL,      1 << 2,       0,           0,            0 },
-	{ "st-256color",    "popterm",       NULL,      0,            1,           1,           -1 },
-	// { "firefox",        NULL,            NULL,      1 << 1,       0,           0,            0 },
-	{ "Gcolor2",        NULL,            NULL,      0,            1,           1,           -1 },
+	/* class     instance  title           tags mask  iscentered  isfloating  isterminal  noswallow  monitor */
+	{ "Gimp",    NULL,     NULL,           0,         0,          1,          0,           0,        -1 },
+	{ "Firefox", NULL,     NULL,           1 << 8,    0,          0,          0,          -1,        -1 },
+	{ "St",      NULL,     NULL,           0,         0,          0,          1,           0,        -1 },
+	{ NULL,      NULL,     "Event Tester", 0,         0,          0,          0,           1,        -1 }, /* xev */
 };
 
 /* layout(s) */
@@ -94,7 +90,9 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Return,                  zoom,           {0} },
 	{ MODKEY,                       XK_Escape,                  view,           {0} },
 	{ MODKEY|ShiftMask,             XK_c,                       killclient,     {0} },
-	{ MODKEY,                       XK_m,                       setlayout,      {0} },
+	{ MODKEY,                       XK_t,                       setlayout,      {.v = &layouts[0]} },
+	{ MODKEY,                       XK_f,                       setlayout,      {.v = &layouts[1]} },
+	{ MODKEY,                       XK_m,                       setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_0,                       view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,                       tag,            {.ui = ~0 } },
 	{ MODKEY,                       XK_comma,                   focusmon,       {.i = -1 } },
