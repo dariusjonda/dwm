@@ -65,16 +65,15 @@ static const char *ytaudio[]               = { "st", "-n", "media", "-e", "ytfzf
 static const char *ytvideo[]               = { "st", "-n", "popmaster", "-e", "ytfzf", "-tl", NULL };
 static const char *ebook[]                 = { "st", "-n", "ebook", "-e", "zathura_ebook", NULL };
 static const char *ebookpop[]              = { "st", "-n", "popmaster", "-e", "zathura_ebook", NULL };
-static const char *suspendcmd[]            = { "sudo", "systemctl", "suspend", NULL };
 static const char *browsercmd[]            = { "firefox", NULL };
-static const char *filemanagercmd[]        = { "st", "-e", "ranger", NULL };
+static const char *ranger[]                = { "st", "-e", "ranger", NULL };
+static const char *rangerpop[]             = { "st", "-n", "pop", "-e", "ranger", NULL };
 
 #include "movestack.c"
 #include <X11/XF86keysym.h>
 static Key keys[] = {
 	/* modifier                     key                         function        argument */
 	{ MODKEY,                       XK_Tab,                     view,           {0} },
-	{ MODKEY,                       XK_BackSpace,               spawn,          {.v = suspendcmd } },
 	{ MODKEY,                       XK_Return,                  zoom,           {0} },
 	{ MODKEY|ShiftMask,             XK_Return,                  spawn,          {.v = termcmd } },
 	{ MODKEY|ControlMask,           XK_Return,                  spawn,          {.v = popmastercmd } },
@@ -102,7 +101,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_m,                       setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_p,                       spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_q,                       quit,           {0} },
-	{ MODKEY,                       XK_r,                       spawn,          {.v = filemanagercmd } },
+	{ MODKEY,                       XK_r,                       spawn,          {.v = ranger } },
+	{ MODKEY|ShiftMask,             XK_r,                       spawn,          {.v = rangerpop } },
 	{ MODKEY,                       XK_t,                       setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_y,                       spawn,          {.v = ytvideo } },
 	{ MODKEY|ShiftMask,             XK_y,                       spawn,          {.v = ytaudio } },
