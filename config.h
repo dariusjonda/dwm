@@ -28,6 +28,7 @@ static const Rule rules[] = {
 	{ "st",      NULL,     NULL,           0,         0,  		0,          1,          1,           0,        -1 },
 	{ "st",      "pop",    NULL,           0,         0,  		1,          1,          1,           0,        -1 },
 	{ "st",      "popmaster", NULL,       -1,         0,  		1,          1,          1,           0,        -1 },
+	{ "plexmediaplayer", NULL, NULL,      -1,         0,  		1,          1,          1,           0,        -1 },
 	{ "st",      "wiki",  NULL,            1 << 2,    1,  		0,          1,          1,           0,        -1 },
 	{ "st",      "ebook",  NULL,           1 << 3,    1,  		0,          1,          1,           0,        -1 },
 	{ "st",      "media",  NULL,           1 << 4,    1,  		0,          1,          1,           0,        -1 },
@@ -67,6 +68,7 @@ static const char *ytvideo[]               = { "st", "-n", "popmaster", "-e", "y
 static const char *ebook[]                 = { "st", "-n", "ebook", "-e", "zathura_ebook", NULL };
 static const char *ebookpop[]              = { "st", "-n", "popmaster", "-e", "zathura_ebook", NULL };
 static const char *browsercmd[]            = { "firefox", NULL };
+static const char *plexpop[]               = { "plexmediaplayer", NULL };
 static const char *vimwiki[]               = { "st", "-n", "wiki", "-e", "vimwiki", NULL };
 static const char *workwiki[]              = { "st", "-n", "wiki", "-e", "workwiki", NULL };
 static const char *ranger[]                = { "st", "-e", "ranger", NULL };
@@ -102,6 +104,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_l,                       setmfact,       {.f = +0.05} },
 	{ MODKEY|ShiftMask,             XK_l,                       tagmon,         {.i = +1 } },
 	{ MODKEY,                       XK_m,                       setlayout,      {.v = &layouts[2]} },
+	{ MODKEY,                       XK_p,                       spawn,          {.v = plexpop } },
+	{ MODKEY,                       XK_r,                       spawn,          {.v = ranger } },
 	{ MODKEY|ShiftMask,             XK_q,                       quit,           {0} },
 	{ MODKEY,                       XK_r,                       spawn,          {.v = ranger } },
 	{ MODKEY|ShiftMask,             XK_r,                       spawn,          {.v = rangerpop } },
