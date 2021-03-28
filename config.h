@@ -11,12 +11,12 @@ static const char *fonts[]            = { "FiraCode-Regular:size=15" };
 static const char dmenufont[]         = "FiraCode-Regular:size=15";
 static const char col_cyan[]          = "#005577";
 static const char col_dark_grey[]     = "#030303";
-static const char col_red[]           = "#3ae02b";
+static const char col_green[]         = "#3ae02b";
 static const char col_white[]         = "#ffffff";
 static const char *colors[][3]      = {
 	/*               fg                  bg                   border   */
 	[SchemeNorm] = { col_white,          col_dark_grey,       col_dark_grey },
-	[SchemeSel]  = { col_red,            col_dark_grey,       col_white },
+	[SchemeSel]  = { col_green,          col_dark_grey,       col_white },
 };
 
 /* tagging */
@@ -60,7 +60,7 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, NULL };
 static const char *termcmd[]               = { "st", NULL };
-static const char *popmastercmd[]            = { "st", "-n", "popmaster", "-g", "90x30", NULL };
+static const char *popmastercmd[]          = { "st", "-n", "popmaster", "-g", "90x30", NULL };
 static const char *ytaudio[]               = { "st", "-n", "media", "-e", "ytfzf", "-tml", NULL };
 static const char *ytvideo[]               = { "st", "-n", "popmaster", "-e", "ytfzf", "-tl", NULL };
 static const char *ebook[]                 = { "st", "-n", "ebook", "-e", "zathura_ebook", NULL };
@@ -73,30 +73,30 @@ static const char *rangerpop[]             = { "st", "-n", "pop", "-e", "ranger"
 #include <X11/XF86keysym.h>
 static Key keys[] = {
 	/* modifier                     key                         function        argument */
-	{ MODKEY,                       XK_Tab,                     view,           {0} },
-	{ MODKEY,                       XK_Return,                  zoom,           {0} },
-	{ MODKEY|ShiftMask,             XK_Return,                  spawn,          {.v = termcmd } },
-	{ MODKEY|ControlMask,           XK_Return,                  spawn,          {.v = popmastercmd } },
- 	{ MODKEY,                       XK_space,                   togglefloating, {0} },
 	{ MODKEY,                       XK_comma,                   focusmon,       {.i = -1 } },
  	{ MODKEY|ShiftMask,             XK_comma,                   tagmon,         {.i = -1 } },
 	{ MODKEY,                       XK_period,                  focusmon,       {.i = +1 } },
  	{ MODKEY|ShiftMask,             XK_period,                  tagmon,         {.i = +1 } },
  	{ MODKEY|ControlMask,           XK_period,                  setcentered,    {0} },
+	{ MODKEY,                       XK_Return,                  zoom,           {0} },
+	{ MODKEY|ShiftMask,             XK_Return,                  spawn,          {.v = termcmd } },
+	{ MODKEY|ControlMask,           XK_Return,                  spawn,          {.v = popmastercmd } },
+ 	{ MODKEY,                       XK_space,                   togglefloating, {0} },
+	{ MODKEY,                       XK_Tab,                     view,           {0} },
 	{ MODKEY,                       XK_b,                       togglebar,      {0} },
 	{ MODKEY|ShiftMask,             XK_c,                       killclient,     {0} },
 	{ MODKEY,                       XK_d,                       incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_f,                       spawn,          {.v = browsercmd } },
-	// { MODKEY,                       XK_f,                       setlayout,      {.v = &layouts[1]} },
+	{ MODKEY,                       XK_g,                       setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_h,                       setmfact,       {.f = -0.05} },
-	// { MODKEY|ShiftMask,             XK_h,                       tagmon,         {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_h,                       tagmon,         {.i = -1 } },
 	{ MODKEY,                       XK_i,                       incnmaster,     {.i = +1 } },
 	{ MODKEY,                       XK_j,                       focusstack,     {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_j,                       movestack,      {.i = +1 } },
 	{ MODKEY,                       XK_k,                       focusstack,     {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_k,                       movestack,      {.i = -1 } },
 	{ MODKEY,                       XK_l,                       setmfact,       {.f = +0.05} },
-	// { MODKEY|ShiftMask,             XK_l,                       tagmon,         {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_l,                       tagmon,         {.i = +1 } },
 	{ MODKEY,                       XK_m,                       setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_p,                       spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_q,                       quit,           {0} },
