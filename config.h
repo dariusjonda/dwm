@@ -105,7 +105,6 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_l,                       tagmon,         {.i = +1 } },
 	{ MODKEY,                       XK_m,                       setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_p,                       spawn,          {.v = plexpop } },
-	{ MODKEY,                       XK_r,                       spawn,          {.v = ranger } },
 	{ MODKEY|ShiftMask,             XK_q,                       quit,           {0} },
 	{ MODKEY,                       XK_r,                       spawn,          {.v = ranger } },
 	{ MODKEY|ShiftMask,             XK_r,                       spawn,          {.v = rangerpop } },
