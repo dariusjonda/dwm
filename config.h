@@ -62,11 +62,14 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[]              = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, NULL };
 static const char *termcmd[]               = { "st", NULL };
 static const char *popmastercmd[]          = { "st", "-n", "popmaster", "-g", "90x30", NULL };
-static const char *ytaudio[]               = { "st", "-n", "media", "-e", "ytm_kiosk", "-tml", NULL };
+static const char *cr_pop[]           = { "st", "-n", "popmaster", "-e", "cr_kiosk", "-tml", NULL };
+static const char *waka_pop[]           = { "st", "-n", "popmaster", "-e", "waka_kiosk", "-tml", NULL };
 static const char *netflix[]               = { "st", "-n", "media", "-e", "netflix_kiosk", "-tml", NULL };
+static const char *netflix_pop[]           = { "st", "-n", "popmaster", "-e", "netflix_kiosk", "-tml", NULL };
+static const char *ytaudio[]               = { "st", "-n", "media", "-e", "ytm_kiosk", "-tml", NULL };
 static const char *ytvideo[]               = { "st", "-n", "popmaster", "-e", "yt_kiosk", "-tl", NULL };
 static const char *ebook[]                 = { "st", "-n", "ebook", "-e", "zathura_ebook", NULL };
-static const char *ebookpop[]              = { "st", "-n", "popmaster", "-e", "zathura_ebook", NULL };
+static const char *ebookpop[]              = { "st", "-n", "pop", "-e", "zathura_ebook", NULL };
 static const char *browsercmd[]            = { "firefox", NULL };
 static const char *plexpop[]               = { "plexmediaplayer", NULL };
 static const char *vimwiki[]               = { "st", "-n", "wiki", "-e", "vimwiki", NULL };
@@ -89,6 +92,8 @@ static Key keys[] = {
  	{ MODKEY,                       XK_space,                   togglefloating, {0} },
 	{ NULL,                         XK_Super_R,                 spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Tab,                     view,           {0} },
+	{ MODKEY,                       XK_a,                       spawn,          {.v = cr_pop } },
+	{ MODKEY|ShiftMask,             XK_a,                       spawn,          {.v = waka_pop } },
 	{ MODKEY,                       XK_b,                       togglebar,      {0} },
 	{ MODKEY|ShiftMask,             XK_c,                       killclient,     {0} },
 	{ MODKEY,                       XK_d,                       incnmaster,     {.i = -1 } },
@@ -105,6 +110,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_l,                       tagmon,         {.i = +1 } },
 	{ MODKEY,                       XK_m,                       setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_n,                       spawn,          {.v = netflix } },
+	{ MODKEY|ShiftMask,             XK_n,                       spawn,          {.v = netflix_pop } },
 	{ MODKEY,                       XK_p,                       spawn,          {.v = plexpop } },
 	{ MODKEY|ShiftMask,             XK_q,                       quit,           {0} },
 	{ MODKEY,                       XK_r,                       spawn,          {.v = ranger } },
